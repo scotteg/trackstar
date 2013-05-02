@@ -1,0 +1,8 @@
+2013/05/01 20:51:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "gii".' in /Library/WebServer/yi-1-1-13/web/CWebApplication.php:286
+Stack trace:
+#0 /Library/WebServer/yi-1-1-13/web/CWebApplication.php(141): CWebApplication->runController('gii')
+#1 /Library/WebServer/yi-1-1-13/base/CApplication.php(169): CWebApplication->processRequest()
+#2 /Library/WebServer/Documents/trackstar/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/trackstar/index.php?r=gii
+---
