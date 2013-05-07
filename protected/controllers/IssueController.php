@@ -24,13 +24,16 @@ class IssueController extends Controller
 	}
 
 	/**
-	 * Displays a particular model.
+	 * Displays a particular model with associated comments
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
+        $issue = $this->loadModel($id, true); // true = also load related comments with authors
+        $comment = $this->createComment($issue);
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+            'comment'=>$comment
 		));
 	}
 
@@ -137,11 +140,18 @@ class IssueController extends Controller
 	 * @return Issue the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	public function loadModel($id, $withComments=false)
 	{
-		$model=Issue::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+        if ($withComments) {
+            $model = Issue::model()->with(array('comments'=>array('with'=>'author')))->findByPk($id);
+        } else {
+            $model=Issue::model()->findByPk($id);
+        }
+
+		if ($model===null) {
+            throw new CHttpException(404,'The requested page does not exist.');
+        }
+
 		return $model;
 	}
 
@@ -191,5 +201,21 @@ class IssueController extends Controller
         }
         
         return $this->_project;
+    }
+
+    protected function createComment($issue)
+    {
+        $comment = new Comment;
+
+        if (isset($_POST['Comment'])) {
+            $comment->attributes = $_POST['Comment'];
+
+            if ($issue->addComment($comment)) {
+                Yii::app()->user->setFlash('commentSubmitted', 'Your comment has been added.');
+                $this->refresh();
+            }
+        }
+
+        return $comment;
     }
 }
