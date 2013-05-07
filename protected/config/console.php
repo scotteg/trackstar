@@ -10,7 +10,15 @@ return array(
 	'preload'=>array('log'),
 
 	// application components
+    // Need to specify table names because tbl_ prefix is used
 	'components'=>array(
+        'authManager'=>array(
+            'class'=>'CDbAuthManager',
+            'connectionID'=>'db',
+            'itemTable'=>'tbl_auth_item',
+            'itemChildTable'=>'tbl_auth_item_child',
+            'assignmentTable'=>'tbl_auth_assignment',
+        ),
 		'db'=>array(
 			'connectionString' => 'mysql:host=127.0.0.1;dbname=trackstar',
 			'emulatePrepare' => true,

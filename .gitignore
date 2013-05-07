@@ -1,3 +1,8 @@
+# Yii-specific
+assets/
+protected/runtime/
+themes/classic/views/
+
 *.iml
 *.ipr
 *.iws

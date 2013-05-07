@@ -126,6 +126,9 @@ class User extends TrackStarActiveRecord
      */
     public function validatePassword($password)
     {
+        // To allow initial password to be regular text
+        // return $password===$this->password;
+
         return crypt($password, $password)===$this->password;
     }
 
