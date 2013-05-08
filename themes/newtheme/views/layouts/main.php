@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
 	<![endif]-->
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -22,9 +22,7 @@
 
 <div class="container" id="page">
 
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+	<div id="header"></div><!-- Header image defined in main.css #header -->
 
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(

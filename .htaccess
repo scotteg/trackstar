@@ -1,0 +1,13 @@
+# Turn on rewrite engine
+# FollowSymLinks must be enabled for this to work
+<ifModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine On
+</ifModule>
+
+# Redirect all unrecognized requests to Yii entry script
+<ifModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php
+</ifModule>

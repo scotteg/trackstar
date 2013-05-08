@@ -7,7 +7,17 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+
+	'name'=>'TrackStar',
+
+	// id defaults to name if not specified
+	'id'=>'TrackStar',
+
+	'theme'=>'newtheme',
+
+	// 'language'=>'rev',
+
+	'homeUrl'=>'/trackstar/project',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
