@@ -42,17 +42,27 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		// uncomment the following to enable URLs in path-format
-		/*
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
-				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-			),
+				// Feed for all projects
+				// trackstar/commentFeed
+				'commentFeed'=>array('comment/feed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+
+				// Feed for one project
+				// trackstar/1/commentFeed.xml
+				'<pid:\d+>/commentFeed'=>array('comment/feed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+				),
+
+			// Prevent index.php from being included by createAbsoluteUrl()
+			'showScriptName'=>false,
+
+			// 'rules'=>array(
+			// 	'<controller:\w+>/<id:\d+>'=>'<controller>/view',
+			// 	'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+			// 	'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+			// ),
 		),
-		*/
 		'db'=>array(
 			'connectionString' => 'mysql:host=127.0.0.1;dbname=trackstar',
 			'emulatePrepare' => true,

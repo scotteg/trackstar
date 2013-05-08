@@ -34,6 +34,11 @@ class ProjectController extends Controller
                 'pageSize'=>1, // Set to 1 for testing pagination
                 ),
         ));
+
+        // Add RSS button to address bar
+        Yii::app()->clientScript->registerLinkTag(
+            'alternate', 'application/rss+xml', $this->createUrl('comment/feed', array('pid'=>$this->loadModel($id)->id))
+            );
         
         $this->render('view',array(
             'model'=>$this->loadModel($id),
@@ -120,6 +125,12 @@ class ProjectController extends Controller
     public function actionIndex()
     {
         $dataProvider=new CActiveDataProvider('Project');
+
+        // Add RSS button to address bar
+        Yii::app()->clientScript->registerLinkTag(
+            'alternate', 'application/rss+xml', $this->createUrl('comment/feed')
+            );
+
         $this->render('index',array(
             'dataProvider'=>$dataProvider,
         ));
