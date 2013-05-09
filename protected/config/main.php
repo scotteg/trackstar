@@ -26,6 +26,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.modules.admin.models.*', // To enable access to admin module model from anywhere in the application, e.g., to display messages to users
 	),
 
 	'modules'=>array(
@@ -36,6 +37,7 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
+		'admin',
 	),
 
 	// application components

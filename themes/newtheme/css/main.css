@@ -87,11 +87,17 @@ body
 	text-decoration: none;
 }
 
-div.flash-error, div.flash-notice, div.flash-success
+div.flash-error, div.flash-notice, div.flash-success, div.sys-message
 {
 	padding: .8em;
 	margin-bottom: 1em;
 	border: 2px solid #ddd;
+}
+
+div.sys-message
+{
+	background-color: #6cf;
+	border-color: #39f;
 }
 
 div.flash-error
@@ -238,14 +244,4 @@ div.search-form
 .operations li a:hover
 {
 	background: #fff;
-}
-
-div.sys-message
-{
-	padding: .8em;
-	margin-bottom: 1em;
-	border: 3px solid #ddd;
-	background: #9EEFFF;
-	color: #FF330A;
-	border-color: #00849E;
 }

@@ -16,15 +16,19 @@ class RbacCommand extends CConsoleCommand
         $this->ensureAuthManagerDefined();
 
         // Confirm action
-        $message = "This command will create three roles: Owner, Member, and Reader, and the following permissions:\n";
-        $message .= "create, read, update, delete user\n";
-        $message .= "create, read, update, delete project\n";
-        $message .= "create, read, update, delete issue\n";
+        $message = "This command will create four roles: Admin, Owner, Member, and Reader, and the following permissions:\n";
+        $message .= "Full administrative management\n";
+        $message .= "Create, read, update, delete user\n";
+        $message .= "Create, read, update, delete project\n";
+        $message .= "Create, read, update, delete issue\n";
         $message .= 'Would you like to continue?';
 
         if ($this->confirm($message)) {
             // First remove all operations, roles, child relationships, and assignments
             $this->_authManager->clearAll();
+
+            // Create a general task-level permission for admins
+            $this->_authManager->createTask('adminManagement', 'Access to admin functionality');
 
             // Create the lowest level operations for users
             $this->_authManager->createOperation('createUser', 'Create a new user'); // Should be addUser
@@ -45,20 +49,20 @@ class RbacCommand extends CConsoleCommand
             $this->_authManager->createOperation('deleteIssue', 'Delete an issue from a project');
 
              // Create the reader role and add permissions as children
-            $role=$this->_authManager->createRole('reader');
+            $role = $this->_authManager->createRole('reader');
             $role->addChild('readUser');
             $role->addChild('readProject');
             $role->addChild('readIssue');
 
             // Create the member role and add permissions including the reader role as children
-            $role=$this->_authManager->createRole('member');
+            $role = $this->_authManager->createRole('member');
             $role->addChild('reader');
             $role->addChild('createIssue');
             $role->addChild('updateIssue');
             $role->addChild('deleteIssue');
 
             // Create the owner role and add the permissions including the reader and member roles as children
-            $role=$this->_authManager->createRole('owner');
+            $role = $this->_authManager->createRole('owner');
             $role->addChild('reader'); // Is this necessary since adding member also adds reader?
             $role->addChild('member');
             $role->addChild('createUser');
@@ -67,6 +71,16 @@ class RbacCommand extends CConsoleCommand
             $role->addChild('createProject');
             $role->addChild('updateProject');
             $role->addChild('deleteProject');
+
+            // Create the admin role and permissions including reader, member, and owner as children
+            $role = $this->_authManager->createRole('admin');
+            $role->addChild('reader');
+            $role->addChild('member');
+            $role->addChild('owner');
+            $role->addChild('adminManagement');
+
+            // Ensure there is only one admin (force it to be id 1)
+            $this->_authManager->assign('admin', 1);
 
             echo "Authorization hierarchy successfully generated.\n";
         } else {
