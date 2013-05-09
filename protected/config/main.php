@@ -91,15 +91,22 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'error',
 				),
-				// uncomment the following to show log messages on web pages
-				/*
+				array(
+					'class'=>'CFileLogRoute',
+					// 'levels'=>'info, trace',
+					'levels'=>'info',
+					'logFile'=>'infoMessages.log',
+				),
 				array(
 					'class'=>'CWebLogRoute',
+					'levels'=>'warning',
 				),
-				*/
 			),
+		),
+		'cache'=>array(
+			'class'=>'system.caching.CFileCache',
 		),
 	),
 
@@ -107,6 +114,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'scott@inyago.com',
 	),
 );

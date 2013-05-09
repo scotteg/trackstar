@@ -29,6 +29,14 @@ $this->menu=array(
 	'itemView'=>'_view',
 )); ?>
 
-<?php $this->beginWidget('zii.widgets.CPortlet', array('title'=>'Recent Comments')); ?>
-<?php $this->widget('RecentCommentsWidget'); ?>
-<?php $this->endWidget(); ?>
+<?php
+$key = 'TrackStar.ProjectListing.RecentComments';
+
+// Fragment caching
+if ($this->beginCache($key, array('duration'=>120))) {
+    $this->beginWidget('zii.widgets.CPortlet', array('title'=>'Recent Comments'));
+    $this->widget('RecentCommentsWidget');
+    $this->endWidget();
+    $this->endCache();
+}
+?>

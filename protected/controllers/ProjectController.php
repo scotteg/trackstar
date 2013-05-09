@@ -16,6 +16,11 @@ class ProjectController extends Controller
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
+            array(
+                'COutputCache + view', // Cache the entire output from actionView() for 2 minutes
+                'duration'=>120,
+                'varyByParam'=>array('id'),
+            ),
         );
     }
 
@@ -131,8 +136,12 @@ class ProjectController extends Controller
             'alternate', 'application/rss+xml', $this->createUrl('comment/feed')
             );
 
-        // Get the latest system message to display based on update_time
-        $sysMessage = SysMessage::model()->find(array('order'=>'t.update_time DESC'));
+        // Get the latest system message to display based on update_time from the database
+        // $sysMessage = SysMessage::model()->find(array('order'=>'t.update_time DESC'));
+
+        // Get the latest system message to display from the cache if available, else from the database
+        $sysMessage = SysMessage::getLatest();
+
         $message = $sysMessage ? $sysMessage->message : null;
 
         $this->render('index',array(
@@ -168,6 +177,7 @@ class ProjectController extends Controller
         $model=Project::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
+            // throw new CException('Example of throwing a CException');
         return $model;
     }
 
