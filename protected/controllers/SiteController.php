@@ -88,28 +88,13 @@ class SiteController extends Controller
 		}
 
 		$model=new LoginForm;
+		$form = new CForm('application.views.site.loginForm', $model);
 
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
+		if ($form->submitted('login') && $form->validate()) {
+			$this->redirect(array('site/index'));
+		} else {
+			$this->render('login', array('form'=>$form));
 		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login()) {
-				Yii::log('Successful login of user: '.Yii::app()->user->name, 'info', 'application.controllers.SiteController');
-				$this->redirect(Yii::app()->user->returnUrl);				
-			} else {
-				Yii::log('Failed login attempt', 'warning', 'application.controllers.SiteController');
-			}
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
 	}
 
 	/**

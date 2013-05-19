@@ -136,6 +136,11 @@ div.flash-success a
 	color: #264409;
 }
 
+input[type=radio] + label, input[type=checkbox] + label
+{
+	display:inline !important;
+}
+
 div.form .rememberMe label
 {
 	display: inline;
@@ -165,7 +170,6 @@ div.search-form
 	margin: 10px 0;
 	background: #eee;
 }
-
 
 .portlet-decoration
 {
